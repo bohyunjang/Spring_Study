@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<!-- web.xml은 서블릿 설정을 해주는 파일 -->
+
+
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- root-contexxt.xml 파일을 설정해주는 부분 spring의 시작과 종료역활을 하는 contextLoaderListener 클래스를 지정 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<!-- appServlet이라는 이름으로 설정된 DispatcherServlet은 매핑된 url의 htpp 모든 요청을 처리하는 기능을 가지고 있다. -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!--   -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<!-- appServlet이 처리할 요청 url은 / 으로 설정되어 있다. 
+		url 뒤에 /이 붙으면 appServlet에서 컨트롤러에게 요청 처리를 할 수 있다. 
+		여기서 요청이란 "~로 보내줘"가 된다. 컨트롤러는 여기서 요청된 url을 requestmapping 어노테이션을 통해 수행하게 된다.
+	-->
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+</web-app>
